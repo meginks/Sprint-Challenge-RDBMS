@@ -14,6 +14,11 @@ const db = knex(knexConfig);
 
 // HELPER FUNCTIONS 
 
+function trueFalse(boolean) {
+    return boolean === 0 ? false : true;  
+}
+
+
 function findById(id) {
     return db('projects')
       .where({ id })
@@ -22,7 +27,7 @@ function findById(id) {
         if (project) {
           return getProjectActions(id).then(actions => {
             project.actions = actions;
-  
+            project.completed = trueFalse(project.completed);
             return project;
           });
         } else {

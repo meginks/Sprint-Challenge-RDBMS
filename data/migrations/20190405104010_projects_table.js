@@ -10,7 +10,8 @@ exports.up = function(knex, Promise) {
       table.string('project_description')
       .notNullable(); 
 
-      table.boolean('completed'); 
+      table.boolean('completed')
+      .toDefault(false); 
   })
 };
 
