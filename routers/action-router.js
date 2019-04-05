@@ -11,35 +11,28 @@ const knexConfig = {
 }
 
 const db = knex(knexConfig); 
+ 
+// POST ACTION 
+
+// fields required in json post: 
+// action_description - text
+// action_notes - text 
+// completed -- boolean (will return 1 for complete and 0 for incomplete) 
+// project_id - integer 
 
 
-// GET PROJECTS BY ID 
-router.get('/:id', (req, res) => {
-    db('projects')
-    .where({id: req.params.id}) 
-    .then(project => {
-        res.status(200)
-        .json(project) 
-    })
-    .catch(error => {
-        res.status(500)
-        .json({ message: `ERROR! ${error}`}) 
-    })
-});
-
-// POST PROJECT 
 
 router.post('/', (req, res) => {
-    db('projects') 
+    db('actions') 
     .insert(req.body)
     .then(ids => {
         const [id] = ids 
-        db('projects')
+        db('actions')
         .where({id})
         .first()
-        .then(project => {
+        .then(action => {
             res.status(200)
-            .json(project)
+            .json(action)
         })
         .catch(error => {
             res.status(500)
@@ -48,8 +41,5 @@ router.post('/', (req, res) => {
     })
 })
 
-// POST ACTION 
 
-
-
-module.exports = router; 
+module.exports = router;
